@@ -12,7 +12,7 @@ export function activate(context: vscode.ExtensionContext) {
 			}
 		}
 		if (curUri) {
-			let panel = vscode.window.createWebviewPanel('binary-view', path.basename(curUri.path), vscode.ViewColumn.Two);
+			let panel = vscode.window.createWebviewPanel('binary-view', `${path.basename(curUri.path)}-preview`, vscode.ViewColumn.One);
 			panel.onDidDispose(() => {
 
 			});
