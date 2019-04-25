@@ -10,16 +10,42 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:extension.helloWorld"
+		"onCommand:extension.binaryPreview"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
 		"commands": [
 			{
-				"command": "extension.helloWorld",
-				"title": "Hello World"
+				"command": "extension.binaryPreview",
+				"title": "显示二进制预览"
 			}
-		]
+		],
+		"menus": {
+			"editor/context": [
+				{
+					"command": "extension.binaryPreview",
+					"group": "navigation"
+				}
+			],
+			"editor/title": [
+				{
+					"command": "extension.binaryPreview",
+					"group": "navigation"
+				}
+			],
+			"editor/title/context": [
+				{
+					"command": "extension.binaryPreview",
+					"group": "navigation"
+				}
+			],
+			"explorer/context": [
+				{
+					"command": "extension.binaryPreview",
+					"group": "navigation"
+				}
+			]
+		}
 	},
 	"scripts": {
 		"vscode:prepublish": "npm run compile",

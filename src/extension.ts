@@ -1,27 +1,72 @@
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
-
-// this method is called when your extension is activated
-// your extension is activated the very first time the command is executed
+import * as fs from 'fs';
+import * as path from 'path';
 export function activate(context: vscode.ExtensionContext) {
+	let disposable = vscode.commands.registerCommand('extension.binaryPreview', (uri: vscode.Uri | undefined) => {
+		let curUri: vscode.Uri | undefined = undefined;
+		if (uri) {
+			curUri = uri;
+		} else {
+			if (vscode.window.activeTextEditor) {
+				curUri = vscode.window.activeTextEditor.document.uri;
+			}
+		}
+		if (curUri) {
+			let panel = vscode.window.createWebviewPanel('binary-view', path.basename(curUri.path), vscode.ViewColumn.Two);
+			panel.onDidDispose(() => {
 
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
-		console.log('Congratulations, your extension "binary" is now active!');
-
-	// The command has been defined in the package.json file
-	// Now provide the implementation of the command with registerCommand
-	// The commandId parameter must match the command field in package.json
-	let disposable = vscode.commands.registerCommand('extension.helloWorld', () => {
-		// The code you place here will be executed every time your command is executed
-
-		// Display a message box to the user
-		vscode.window.showInformationMessage('Hello World!');
+			});
+			vscode.window.showInformationMessage(curUri.path);
+			fs.readFile(curUri.path, 'binary', (err, data) => {
+				if (err) {
+					vscode.window.showErrorMessage(err.message);
+				} else {
+					let buffer = Buffer.from(data);
+					let table = '<table>';
+					for (let i = 0; (i << 3) < buffer.length; i++) {
+						let tr = `<td>${get0xString(i << 3, 8)}:</td>`;
+						let j = 0;
+						while (j < 8 && (i << 3) + j < buffer.length) {
+							let val = buffer.readUInt8((i << 3) + j);
+							if (j & 1) {
+								tr += `${get0xString(val, 2)}</td>`;
+							} else {
+								tr += `<td>${get0xString(val, 2)}`;
+							}
+							j++;
+						}
+						if ((j & 1)) {
+							tr += '</br>';
+						}
+						table += '<tr>' + tr + '</tr>';
+					}
+					table += '</table>';
+					panel.webview.html = htmlTemplate.replace('$', table);
+				}
+			});
+		} else {
+			vscode.window.showWarningMessage('无法正确获取到文件的路径');
+		}
 	});
-
 	context.subscriptions.push(disposable);
 }
+export function deactivate() {
 
-// this method is called when your extension is deactivated
-export function deactivate() {}
+}
+
+let htmlTemplate = `<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+	$
+</body>
+</html>`;
+
+function get0xString(val: number, len: number) {
+	let res = val.toString(16);
+	if (res.length < len) {
+		res = '0'.repeat(len - res.length) + res;
+	}
+	return res;
+}
