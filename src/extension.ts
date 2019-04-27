@@ -12,15 +12,15 @@ export function activate(context: vscode.ExtensionContext) {
 			}
 		}
 		if (curUri) {
-			let panel = vscode.window.createWebviewPanel('binary-view', `${path.basename(curUri.path)}-preview`, vscode.ViewColumn.One);
-			panel.onDidDispose(() => {
-
-			});
 			vscode.window.showInformationMessage(curUri.path);
 			fs.readFile(curUri.path, 'binary', (err, data) => {
 				if (err) {
 					vscode.window.showErrorMessage(err.message);
 				} else {
+					let panel = vscode.window.createWebviewPanel('binary-view', `${path.basename(curUri!.path)}-preview`, vscode.ViewColumn.One);
+					panel.onDidDispose(() => {
+
+					});
 					let buffer = Buffer.from(data);
 					let table = '<table>';
 					for (let i = 0; (i << 3) < buffer.length; i++) {

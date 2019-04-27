@@ -9,6 +9,7 @@
 	"bugs": {
 		"url": "https://github.com/asurance/Binary/issues"
 	},
+	"icon": "images/icon.png",
 	"description": "binary preview for vscode",
 	"version": "0.0.1",
 	"engines": {
@@ -28,7 +29,11 @@
 		"commands": [
 			{
 				"command": "extension.binaryPreview",
-				"title": "显示二进制预览"
+				"title": "显示二进制预览",
+				"icon": {
+					"light": "images/icon-light.svg",
+					"dark": "images/icon-dark.svg"
+				}
 			}
 		],
 		"menus": {
