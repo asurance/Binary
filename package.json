@@ -1,7 +1,15 @@
 {
-	"name": "binary",
+	"name": "binary-preview",
 	"displayName": "Binary",
-	"description": "binary",
+	"author": {
+		"name": "asurance",
+		"email": "784672616@qq.com"
+	},
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/asurance/Binary/issues"
+	},
+	"description": "binary preview for vscode",
 	"version": "0.0.1",
 	"engines": {
 		"vscode": "^1.33.0"
@@ -11,6 +19,9 @@
 	],
 	"activationEvents": [
 		"onCommand:extension.binaryPreview"
+	],
+	"keywords": [
+		"binary"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
