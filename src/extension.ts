@@ -12,8 +12,8 @@ export function activate(context: vscode.ExtensionContext) {
 			}
 		}
 		if (curUri) {
-			vscode.window.showInformationMessage(curUri.path);
-			fs.readFile(curUri.path, 'binary', (err, data) => {
+			vscode.window.showInformationMessage(curUri.fsPath);
+			fs.readFile(curUri.fsPath, (err, buffer) => {
 				if (err) {
 					vscode.window.showErrorMessage(err.message);
 				} else {
@@ -21,7 +21,6 @@ export function activate(context: vscode.ExtensionContext) {
 					panel.onDidDispose(() => {
 
 					});
-					let buffer = Buffer.from(data);
 					let table = '<table>';
 					for (let i = 0; (i << 3) < buffer.length; i++) {
 						let tr = `<td>${get0xString(i << 3, 8)}:</td>`;
