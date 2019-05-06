@@ -76,10 +76,10 @@
 		"url": "https://github.com/asurance/Binary"
 	},
 	"devDependencies": {
-		"typescript": "^3.3.1",
-		"vscode": "^1.1.28",
+		"@types/mocha": "^2.2.42",
+		"@types/node": "^10.14.6",
 		"tslint": "^5.12.1",
-		"@types/node": "^10.12.21",
-		"@types/mocha": "^2.2.42"
+		"typescript": "^3.3.1",
+		"vscode": "^1.1.28"
 	}
 }
