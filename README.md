@@ -10,3 +10,6 @@
 ## Requirements
 
 Nodejs
+
+## 注意
+本插件已不再维护,如有类似需求,可以考虑微软官方插件[Hex Editor](https://marketplace.visualstudio.com/items?itemName=ms-vscode.hexeditor)
